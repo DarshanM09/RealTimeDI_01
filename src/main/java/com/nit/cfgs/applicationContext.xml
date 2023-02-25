@@ -1,0 +1,37 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- bean definitions here -->
+	<!--datasource congf -->
+	<bean id="drds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/realtime_customerdisc?useSSl=false"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+
+	</bean>
+	<!--DAO confg -->
+	<bean id="CustDao" class="com.nit.dao.CustomerDAOImpl">
+		<constructor-arg name="ds" ref="drds"></constructor-arg>
+
+	</bean>
+
+	<!--serviceclass confg -->
+	<bean id="custservice"
+		class="com.nit.service.CustomerMngtServiceImpl">
+		<constructor-arg name="dao" ref="CustDao"></constructor-arg>
+
+	</bean>
+
+	<!--Controller confg -->
+	<bean id="controller" class="com.nit.controller.MainController">
+		<constructor-arg name="service" ref="custservice"></constructor-arg>
+
+	</bean>
+
+</beans>
